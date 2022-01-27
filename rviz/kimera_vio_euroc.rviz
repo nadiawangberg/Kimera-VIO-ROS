@@ -3,8 +3,7 @@ Panels:
     Help Height: 138
     Name: Displays
     Property Tree Widget:
-      Expanded:
-        - /PointCloud Time Horizon1
+      Expanded: ~
       Splitter Ratio: 0.5
     Tree Height: 497
   - Class: rviz/Selection
@@ -33,16 +32,38 @@ Toolbars:
 Visualization Manager:
   Class: ""
   Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_link:
+        base_link_gt:
           Value: true
-        cam0:
+        base_link_kimera:
           Value: true
-        cam1:
+        left_cam_kimera:
+          Value: true
+        map:
+          Value: true
+        right_cam_kimera:
           Value: true
         world:
           Value: true
@@ -54,11 +75,15 @@ Visualization Manager:
       Show Names: true
       Tree:
         world:
-          base_link:
-            cam0:
+          base_link_gt:
+            {}
+          base_link_kimera:
+            left_cam_kimera:
               {}
-            cam1:
+            right_cam_kimera:
               {}
+          map:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 0.5
@@ -251,7 +276,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 11.316937446594238
+      Distance: 33.939395904541016
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -267,9 +292,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.1547961235046387
+      Pitch: 0.4597969353199005
       Target Frame: base_link
-      Yaw: 3.0468709468841553
+      Yaw: 4.146883010864258
     Saved:
       - Class: rviz/ThirdPersonFollower
         Distance: 6.814720153808594
