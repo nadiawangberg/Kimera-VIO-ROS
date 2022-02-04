@@ -27,6 +27,7 @@ RosOnlineDataProvider::RosOnlineDataProvider(const VioParams& vio_params)
       frame_count_(FrameId(0)),
       left_img_subscriber_(),
       right_img_subscriber_(),
+      seg_img_subscriber_(),
       left_cam_info_subscriber_(),
       right_cam_info_subscriber_(),
       sync_img_(),
@@ -161,6 +162,12 @@ RosOnlineDataProvider::RosOnlineDataProvider(const VioParams& vio_params)
       *it_, "left_cam/image_raw", kMaxImagesQueueSize);
   right_img_subscriber_.subscribe(
       *it_, "right_cam/image_raw", kMaxImagesQueueSize);
+  
+  seg_img_subscriber_.subscribe(
+      *it_, "seg_cam/rgb/image_raw", kMaxImagesQueueSize);
+
+  seg_img_subscriber_.registerCallback(boost::bind(&RosOnlineDataProvider::callbackSegmentationImage, this, _1));
+
   static constexpr size_t kMaxImageSynchronizerQueueSize = 10u;
   sync_img_ = VIO::make_unique<message_filters::Synchronizer<sync_pol_img>>(
       sync_pol_img(kMaxImageSynchronizerQueueSize),
@@ -270,6 +277,13 @@ bool RosOnlineDataProvider::sequentialSpin() {
   ros::spinOnce();
   return true;
 }
+
+void RosOnlineDataProvider::callbackSegmentationImage(
+    const sensor_msgs::ImageConstPtr& seg_msg) {
+
+      LOG(INFO) << "Yess, got a segmentation image!!";
+
+    }
 
 // TODO(marcus): with the readRosImage, this is a slow callback. Might be too
 // slow...

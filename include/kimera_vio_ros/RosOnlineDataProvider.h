@@ -73,6 +73,9 @@ class RosOnlineDataProvider : public RosDataProviderInterface {
   ReinitPacket reinit_packet_ = ReinitPacket();
 
  private:
+  // Segmentation image callback
+  void callbackSegmentationImage(const sensor_msgs::ImageConstPtr& seg_msg);
+
   // Stereo image callback
   void callbackStereoImages(const sensor_msgs::ImageConstPtr& left_msg,
                             const sensor_msgs::ImageConstPtr& right_msg);
@@ -106,6 +109,7 @@ class RosOnlineDataProvider : public RosDataProviderInterface {
   typedef image_transport::SubscriberFilter ImageSubscriber;
   ImageSubscriber left_img_subscriber_;
   ImageSubscriber right_img_subscriber_;
+  ImageSubscriber seg_img_subscriber_;
 
   // Define CameraInfo message subscribers
   typedef message_filters::Subscriber<sensor_msgs::CameraInfo>
