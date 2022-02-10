@@ -235,6 +235,11 @@ void KimeraVioRos::connectVIO() {
         std::bind(&VIO::StereoImuPipeline::fillRightFrameQueue,
                   std::ref(*CHECK_NOTNULL(stereo_pipeline.get())),
                   std::placeholders::_1));
+    
+    data_provider_->registerSegFrameCallback(
+        std::bind(&VIO::StereoImuPipeline::fillSegFrameQueue,
+                  std::ref(*CHECK_NOTNULL(stereo_pipeline.get())),
+                  std::placeholders::_1));
 
     vio_pipeline_ = VIO::safeCast<VIO::StereoImuPipeline, VIO::Pipeline>(
         std::move(stereo_pipeline));

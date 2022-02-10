@@ -280,9 +280,21 @@ bool RosOnlineDataProvider::sequentialSpin() {
 
 void RosOnlineDataProvider::callbackSegmentationImage(
     const sensor_msgs::ImageConstPtr& seg_msg) {
-
       LOG(INFO) << "Yess, got a segmentation image!!";
 
+      CHECK_GE(vio_params_.camera_params_.size(), 2u);
+      const CameraParams& seg_cam_info = vio_params_.camera_params_.at(0); // TODO(Nadia) - this assumes the seg image has the same camera params as left!!
+
+      CHECK(seg_msg);
+      const Timestamp& timestamp_seg = seg_msg->header.stamp.toNSec();
+
+      if (!shutdown_ && vio_params_.frontend_type_ == VIO::FrontendType::kStereoImu) {
+        CHECK(seg_frame_callback_) 
+            << "Did you forget to register the seg frame callback?"; 
+        
+        LOG(INFO) << "Yess!! calling seg_frame_callback_";
+        seg_frame_callback_(VIO::make_unique<Frame>(frame_count_, timestamp_seg, seg_cam_info, readRosImage(seg_msg)));
+      }
     }
 
 // TODO(marcus): with the readRosImage, this is a slow callback. Might be too
