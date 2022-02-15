@@ -280,7 +280,6 @@ bool RosOnlineDataProvider::sequentialSpin() {
 
 void RosOnlineDataProvider::callbackSegmentationImage(
     const sensor_msgs::ImageConstPtr& seg_msg) {
-      LOG(INFO) << "Yess, got a segmentation image!!";
 
       CHECK_GE(vio_params_.camera_params_.size(), 2u);
       const CameraParams& seg_cam_info = vio_params_.camera_params_.at(0); // TODO(Nadia) - this assumes the seg image has the same camera params as left!!
