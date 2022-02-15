@@ -291,7 +291,6 @@ void RosOnlineDataProvider::callbackSegmentationImage(
         CHECK(seg_frame_callback_) 
             << "Did you forget to register the seg frame callback?"; 
         
-        LOG(INFO) << "Yess!! calling seg_frame_callback_";
         seg_frame_callback_(VIO::make_unique<Frame>(frame_count_, timestamp_seg, seg_cam_info, readRosImage(seg_msg)));
       }
     }
