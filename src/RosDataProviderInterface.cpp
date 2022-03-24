@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file   RosDataProviderInterface.cpp
  * @brief  Base class for ROS wrappers for Kimera-VIO.
  * @author Antoni Rosinol

@@ -15,6 +15,7 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <sensor_msgs/image_encodings.h>
 #include <std_msgs/Bool.h>
+#include <cv_bridge/cv_bridge.h>
 #include <tf2_ros/static_transform_broadcaster.h>
 
 #include "kimera_vio_ros/utils/UtilsRos.h"
@@ -291,7 +292,10 @@ void RosOnlineDataProvider::callbackSegmentationImage(
         CHECK(seg_frame_callback_) 
             << "Did you forget to register the seg frame callback?"; 
         
-        seg_frame_callback_(VIO::make_unique<Frame>(frame_count_, timestamp_seg, seg_cam_info, readRosImage(seg_msg)));
+        // TODO - this should probably be more similar to readRosImage in terms of error handling
+        const cv::Mat seg_cv = cv_bridge::toCvCopy(seg_msg)->image;
+
+        seg_frame_callback_(VIO::make_unique<Frame>(frame_count_, timestamp_seg, seg_cam_info, seg_cv));
       }
     }
 
